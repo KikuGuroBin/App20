@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App20"
+             x:Class="App20.MainPage">
+    <RelativeLayout>
+        <RelativeLayout x:Name="MainLayout"
+                        HeightRequest="300"
+                        />
+        <RelativeLayout TranslationY="300"
+                        WidthRequest="400"
+                        HeightRequest="100"
+                        BackgroundColor="Blue"/>
+    </RelativeLayout>
+</ContentPage>

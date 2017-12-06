@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App20;assembly:App20"
+             x:Class="App20.Page1">
+    <ContentPage.Content>
+        <RelativeLayout x:Name="MainLayout">
+            <Button Text="Click me!!" 
+                    Clicked="OnClick"/>
+            <ScrollView x:Name="Scroller"
+                        TranslationX="130"
+                        BackgroundColor="Red"
+                        WidthRequest="40"
+                        HeightRequest="30"
+                        Orientation="Horizontal">
+                <ScrollView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ScrollerTapped"/>
+                </ScrollView.GestureRecognizers>
+                <Label x:Name="Label1"
+                       Text="aaaaaaaaaaaaaaaaaaaa"/>
+            </ScrollView>
+            <Button Text="Click me!!!!!!"
+                    Clicked="ScrollToLabel"
+                    TranslationY="50"/>
+            <Button Text="Click me!!!!!!!!!!"
+                    Clicked="ScrollToLabel2"
+                    TranslationY="90"/>
+            <Button Text="Click"
+                    Clicked="CustomDialogShow"
+                    TranslationY="130"/>
+            <RelativeLayout x:Name="DialogShadow"
+                            WidthRequest="{Binding Width}"
+                            HeightRequest="{Binding Height}"
+                            BackgroundColor="Gray"
+                            Opacity="0.4">
+                <!-- TranslationX="{Binding Path=X}"
+                            TranslationY="{Binding Path=Y}" -->
+            </RelativeLayout>
+            <BoxView x:Name="Shadow"
+                     BackgroundColor="Gray"
+                     Opacity="0.4">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTap"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <StackLayout x:Name="ImitationDialog"
+                         WidthRequest="100"
+                         HeightRequest="100"
+                         BackgroundColor="White">
+                <!-- TranslationX="{Binding Path=Width}"
+                     TranslationY="{Binding Path=Height}" -->
+                <Label Text="Hello Dialog!!"/>
+            </StackLayout>
+            <RelativeLayout x:Name="CustomDialog"
+                            WidthRequest="100"
+                            BackgroundColor="White">
+                <Label Text="Show!!"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

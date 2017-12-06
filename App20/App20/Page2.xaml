@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App20.Page2">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="Main">
+            <Button Text="Click!!"
+                    Clicked="OnClick"/>
+            <StackLayout x:Name="Side"
+                         WidthRequest="300"
+                         HeightRequest="100"
+                         BackgroundColor="Blue">
+                <Label Text="fuck meeeeeee"/>
+            </StackLayout>
+            <ContentView x:Name="Side2"
+                         BackgroundColor="Red">
+                <StackLayout>
+                    <Label Text="aaaa"/>
+                </StackLayout>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
