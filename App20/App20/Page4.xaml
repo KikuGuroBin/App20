@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App20;assembly:App20"
+             x:Class="App20.Page4">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="Main">
+            <BoxView x:Name="Box1"
+                     BackgroundColor="Blue"
+                     WidthRequest="100"
+                     HeightRequest="100"
+                     TranslationX="200"
+                     TranslationY="400"/>
+            <local:MyBox x:Name="Box2"
+                     BackgroundColor="Red"
+                     WidthRequest="100"
+                     HeightRequest="100"
+                     TranslationX="0"
+                     TranslationY="400"/>
+            <BoxView TranslationX="210"
+                     BackgroundColor="Red"
+                     WidthRequest="30"
+                     HeightRequest="30"/>
+            <Button Text="Click"
+                    Clicked="OnClick"/>
+            <Button Text="Click2"
+                    TranslationX="100"
+                    Clicked="OnClick2"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

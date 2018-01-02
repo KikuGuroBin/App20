@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App20;assembly:App20"
+             x:Class="App20.Page3">
+    <ContentPage.Content>
+        <local:MyAbsoluteLayout x:Name="Main"
+                                BackgroundColor="Red">
+            <Button Text="click me!!"
+                    Clicked="OnClick"/>
+            <Button Text="label"
+                    x:Name="Label1"
+                    Clicked="Click"/>
+            <Button Text="label"
+                    x:Name="Label2"
+                    Clicked="Click"/>
+            <Button Text="label"
+                    x:Name="Label3"
+                    Clicked="Click"/>
+        </local:MyAbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

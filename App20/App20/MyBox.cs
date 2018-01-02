@@ -9,12 +9,7 @@ namespace App20
     {
         public void Drug(object sender, DrugEvent args)
         {
-            var rc = this.Bounds;
-
-            rc.X += args.X;
-            rc.Y += args.Y;
-
-            this.LayoutTo(rc);
+            this.TranslateTo(TranslationX + args.X, TranslationY + args.Y);
         }
     }
 }

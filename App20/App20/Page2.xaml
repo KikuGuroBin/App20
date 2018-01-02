@@ -6,6 +6,12 @@
         <AbsoluteLayout x:Name="Main">
             <Button Text="Click!!"
                     Clicked="OnClick"/>
+            <ScrollView x:Name="Scroller" 
+                        WidthRequest="100"
+                        BackgroundColor="Red">
+                <AbsoluteLayout x:Name="Main2">
+                </AbsoluteLayout>
+            </ScrollView>
             <StackLayout x:Name="Side"
                          WidthRequest="300"
                          HeightRequest="100"
@@ -16,6 +22,8 @@
                          BackgroundColor="Red">
                 <StackLayout>
                     <Label Text="aaaa"/>
+                    <Button x:Name="SideButton"
+                            Clicked="OnClick"/>
                 </StackLayout>
             </ContentView>
         </AbsoluteLayout>

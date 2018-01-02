@@ -19,13 +19,13 @@ namespace App20
 		public Page2 ()
 		{
 			InitializeComponent ();
-
-
 		}
 
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
+
+            System.Diagnostics.Debug.WriteLine("deg : onSizeAllocated " + width + ", " + height);
 
             /*
             SideBounds = new ViewBounds
@@ -36,15 +36,23 @@ namespace App20
             Side.BindingContext = SideBounds;
             */
 
-            Side2.LayoutTo(new Rectangle(width, 0, 300, 100), 0);
-            Side.LayoutTo(new Rectangle(width, 0, 300, 100), 0);
+            Side2.LayoutTo(new Rectangle(Width, 0, 300, 100), 300);
+            Side.LayoutTo(new Rectangle(Width, 0, 300, 100), 300);
+            Scroller.LayoutTo(new Rectangle(80, 0, 200, 100));
         }
 
         private void OnClick(object sender, EventArgs args)
         {
-            Main.Children.Add(new Image { Source = "Icon.png"}, new Rectangle(0, y, 30, 20));
+            if (sender.Equals(SideButton))
+            {
+                Main2.Children.Add(new Image { Source = "Icon.png" }, new Rectangle(0, y, 30, 20));
 
-            y += 20;
+                y += 20;
+            }
+            else
+            {
+                Side2.LayoutTo(new Rectangle(Width - 50, 0, 100, 100));
+            }
         }
 
         class ViewBounds
