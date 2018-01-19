@@ -36,31 +36,20 @@ namespace App20.Droid
         {
             if (args.Event.Action == MotionEventActions.Move)
             {
-                System.Diagnostics.Debug.WriteLine("1" + CX + ", " + CY);
                 // 移動した分の座標の差分計算
-                var x = args.Event.GetX() - CX;
-                var y = args.Event.GetY() - CY;
-
-                CX = args.Event.GetX();
-                CY = args.Event.GetY();
-
+                var x = args.Event.RawX - CX;
+                var y = args.Event.RawY - CY;
+                
                 // コールバック用インスタンス生成
                 var callBack = new DrugEvent
                 {
-                    X = x * 2,
-                    Y = y * 2,
+                    X = x,
+                    Y = y,
                 };
 
                 // コールバック
                 var view = Element as MyBox;
                 view.Drug(view, callBack);
-            }
-            else if (args.Event.Action == MotionEventActions.Down)
-            {
-                System.Diagnostics.Debug.WriteLine("2");
-                // 座標格納
-                CX = args.Event.GetX();
-                CY = args.Event.GetX();
             }
             else if(args.Event.Action == MotionEventActions.Up)
             {
@@ -69,6 +58,9 @@ namespace App20.Droid
                 CX = -1;
                 CY = -1;
             }
+
+            CX = args.Event.RawX;
+            CY = args.Event.RawY;
         }
     }
 }

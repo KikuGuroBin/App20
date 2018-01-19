@@ -4,27 +4,48 @@
              xmlns:local="clr-namespace:App20;assembly:App20"
              x:Class="App20.Page5">
     <ContentPage.Content>
-        <AbsoluteLayout>
-            <local:LineCanvas x:Name="Canvas"/>
-            <AbsoluteLayout x:Name="Main">
-                <BoxView x:Name="Box1"
+        <AbsoluteLayout x:Name="Main"
+                        WidthRequest="{Binding Width}"
+                        HeightRequest="{Binding Height}">
+            <!-- <StackLayout x:Name="Side"
+                         BackgroundColor="Orange"
                          WidthRequest="100"
-                         HeightRequest="100"
+                         HeightRequest="50">
+                
+            </StackLayout> -->
+            <local:LineCanvas x:Name="Canvas"
+                              WidthRequest="{Binding Width}"
+                              HeightRequest="{Binding Height}">
+                <local:MyBox x:Name="Box1"
+                         WidthRequest="50"
+                         HeightRequest="50"
                          TranslationX="200"
-                         TranslationY="300"
+                         TranslationY="50"
                          Opacity="0.5"
                          BackgroundColor="Red"/>
-                <BoxView x:Name="Box2"
-                         WidthRequest="100"
-                         HeightRequest="100"
+                <local:MyBox x:Name="Box2"
+                         WidthRequest="50"
+                         HeightRequest="50"
                          TranslationX="50"
-                         TranslationY="400"
+                         TranslationY="150"
                          Opacity="0.5"
                          BackgroundColor="Blue"/>
+                <BoxView x:Name="Box3"
+                         WidthRequest="50"
+                         HeightRequest="50"
+                         TranslationX="200"
+                         TranslationY="250"
+                         BackgroundColor="Yellow"/>
+                <BoxView x:Name="Box4"
+                         WidthRequest="50"
+                         HeightRequest="50"   
+                         TranslationY="340"
+                         BackgroundColor="Green"/>
                 <Button Text="Click!!"
                         TranslationX="200"
                         Clicked="OnClick"/>
-            </AbsoluteLayout>
+
+            </local:LineCanvas>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

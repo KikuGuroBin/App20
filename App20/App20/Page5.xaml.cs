@@ -12,24 +12,43 @@ namespace App20
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Page5 : ContentPage
 	{
-        LineCanvas.Line Line;
+        LineCanvas.Line Line1;
+        LineCanvas.Line Line2;
+        LineCanvas.Line Line3;
 
         bool First;
+
+        bool Showing;
 
 		public Page5 ()
 		{
 			InitializeComponent ();
-		}
+
+            Box1.Drug += OnDrug;
+            Box2.Drug += OnDrug;
+
+            // Side.LayoutTo(new Rectangle(-100, 0, 100, 100));
+
+            Showing = true;
+
+            /* 以下の2つのメソッドどちらかで線の引き方を選ぶ */
+            Line1 = Canvas.Tail(Box1, Box2);
+            Line2 = Canvas.Tail(Box2, Box4);
+            Line3 = Canvas.Side(true, Box2, Box3);
+
+            Line1.Draw();
+            Line2.Draw();
+            Line3.Draw();
+        }
 
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
+            
+            if (!Showing)
+            {
 
-            Canvas.WidthRequest = width;
-            Canvas.HeightRequest = height;
-
-            Main.WidthRequest = width;
-            Main.HeightRequest = height;
+            }
 
             if (First)
             {
@@ -37,17 +56,22 @@ namespace App20
             }
 
             First = true;
+        }
 
-            Line = Canvas.Side();
+        void OnDrug(object sender, DrugEvent args)
+        {
+            var view = sender as View;
 
-            //Line = Canvas.Tail();
+            var lines = Canvas.SearchLines(view);
+
+            foreach (var line in lines)
+            {
+                line.Draw();
+            }
         }
 
         private void OnClick(object sender, EventArgs args)
         {
-            //Line.DrawTail(Box1, Box2);
-
-            Line.DrawSide(Box1, Box2, true);
         }
     }
 }
