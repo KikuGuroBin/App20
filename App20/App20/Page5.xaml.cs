@@ -34,28 +34,11 @@ namespace App20
             /* 以下の2つのメソッドどちらかで線の引き方を選ぶ */
             Line1 = Canvas.Tail(Box1, Box2);
             Line2 = Canvas.Tail(Box2, Box4);
-            Line3 = Canvas.Side(true, Box2, Box3);
+            //Line3 = Canvas.Side(true, Box2, Box3);
 
             Line1.Draw();
             Line2.Draw();
-            Line3.Draw();
-        }
-
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-            
-            if (!Showing)
-            {
-
-            }
-
-            if (First)
-            {
-                return;
-            }
-
-            First = true;
+            //Line3.Draw();
         }
 
         void OnDrug(object sender, DrugEvent args)

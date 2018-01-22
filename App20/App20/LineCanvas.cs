@@ -10,7 +10,7 @@ namespace App20
     /// 
     /// 線の描画は内部クラスで行っている。
     /// </summary>
-    public class LineCanvas : AbsoluteLayout
+    public class LineCanvas : RelativeLayout
     {
         /// <summary>
         /// 生成した線を管理するリスト。
@@ -26,20 +26,45 @@ namespace App20
         {
             var array = new BoxView[5];
 
+            var bounds = new double[10];
+
             for (var i = 0; i < 5; i++)
             {
                 var box = new BoxView
                 {
                     BackgroundColor = Color.Black,
-                    WidthRequest = 0,
-                    HeightRequest = 0,
                 };
                 array[i] = box;
 
-                this.Children.Add(box);
+                bounds[i] = 0;
+                bounds[i + 5] = 0;
+
+                this.Children.Add(box,
+                    Constraint.RelativeToParent((p) =>
+                    {
+                        return bounds[i];
+                    }),
+                    Constraint.RelativeToParent((p) =>
+                    {
+                        return bounds[i + 5];
+                    }),
+                    Constraint.RelativeToParent((p) =>
+                    {
+                        return 0;
+                    }),
+                    Constraint.RelativeToParent((p) =>
+                    {
+                        return 0;
+                    })
+                );
             }
 
-            var line = views.Length == 2 ? new LineCanvas.Line(views[0], views[1], array) : new LineCanvas.Line(array);
+            var line = views.Length == 2 ? 
+                new LineCanvas.Line(views[0], views[1], array) : 
+                new LineCanvas.Line(array)
+                {
+                    Bounds = bounds,
+                };
 
             Lines.Add(line);
 
@@ -65,7 +90,7 @@ namespace App20
                 };
                 array[i] = box;
 
-                this.Children.Add(box);
+                //this.Children.Add(box);
             }
 
             var line = views.Length == 2 ? 
@@ -124,6 +149,11 @@ namespace App20
             /// で描画したBoxViewを管理する配列。
             /// </summary>
             public BoxView[] SideLines = new BoxView[4];
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public double[] Bounds;
 
             /// <summary>
             /// <para><seealso cref="DrawTail" />か</para>
@@ -207,14 +237,14 @@ namespace App20
             public void DrawTail(View a, View b)
             {
                 /* AインスタンスのしっぽのY座標を取得 */
-                var aty = a.TranslationY + a.Height;
+                var aty = a.Y + a.Height;
 
                 /* Bインスタンスの頭のY座標を取得 */
-                var bhy = b.TranslationY;
+                var bhy = b.Y;
 
                 /* 両インスタンスの中心のX座標を取得 */
-                var acx = a.TranslationX + a.Width / 2;
-                var bcx = b.TranslationX + b.Width / 2;
+                var acx = a.X + a.Width / 2;
+                var bcx = b.X + b.Width / 2;
 
                 /* 位置関係を判定 */
                 if (bhy - aty > viewMargin)
@@ -228,9 +258,8 @@ namespace App20
 
                     /* 線の描画 */
                     var box1 = TailLines[0];
-                    box1.TranslationX = acx - linePixcel / 2;
-                    box1.TranslationY = aty;
-                    box1.WidthRequest = linePixcel;
+                    Bounds[0] = acx - linePixcel / 2;
+                    Bounds[5] = aty;
                     box1.IsVisible = true;
 
                     var box2 = TailLines[1];
@@ -245,7 +274,12 @@ namespace App20
 
                     if (same)
                     {
-                        box1.HeightRequest = bhy - aty - linePixcel / 2;
+                        LayoutTo(box1,
+                            Bounds[0],
+                            Bounds[5],
+                            linePixcel,
+                            bhy - aty - linePixcel / 2
+                        );
 
                         box3.IsVisible = false;
 
@@ -253,13 +287,25 @@ namespace App20
                     }
                     else
                     {
-                        box1.HeightRequest = both - linePixcel / 2;
+                        LayoutTo(box1,
+                            acx - linePixcel / 2,
+                            aty,
+                            linePixcel,
+                            both - linePixcel / 2
+                        );
 
                         box3.TranslationX = Math.Min(acx, bcx) - linePixcel / 2;
                         box3.TranslationY = aty + both - linePixcel / 2;
                         box3.WidthRequest = Math.Abs(bcx - acx) + linePixcel;
                         box3.HeightRequest = linePixcel;
                         box3.IsVisible = true;
+
+                        LayoutTo(box1,
+                            Math.Min(acx, bcx) - linePixcel / 2,
+                            aty + both - linePixcel / 2,
+                            Math.Abs(bcx - acx) + linePixcel,
+                            linePixcel
+                        );
 
                         box5.TranslationX = bcx - linePixcel / 2;
                         box5.TranslationY = bhy - both + linePixcel / 2;
@@ -478,6 +524,22 @@ namespace App20
                     box4.HeightRequest = viewMargin;
                 }
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="view"></param>
+            /// <param name="bounds"></param>
+            private async void LayoutTo(View view, params double[] bounds)
+            {
+                var rc = view.Bounds;
+                rc.X = bounds[0];
+                rc.Y = bounds[1];
+                rc.Width = bounds[2];
+                rc.Height = bounds[3];
+
+                await view.LayoutTo(rc, 0);
+            } 
         }
     }
 }
