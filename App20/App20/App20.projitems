@@ -21,6 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)MyBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrugEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MyImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MyRelative.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Page1.xaml.cs">
       <DependentUpon>Page1.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -43,6 +44,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Page6.xaml.cs">
       <DependentUpon>Page6.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Page7.xaml.cs">
+      <DependentUpon>Page7.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -91,6 +96,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Page6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Page7.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

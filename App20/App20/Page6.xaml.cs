@@ -29,15 +29,23 @@ namespace App20
         /* レイアウト内の子Viewの */
         Dictionary<View, ViewBounds> dic = new Dictionary<View, ViewBounds>();
 
+        Label label;
+
         List<View> views = new List<View>();
 
 		public Page6 ()
 		{
 			InitializeComponent ();
 
+            /*
             for (var i = 0; i < 5; i++)
             {
-                var label = new Label { Text = i.ToString() };
+                var label = new Label
+                {
+                    Text = i.ToString(),
+                    TranslationX = i * 10,
+                    TranslationY = i * 10,
+                };
 
                 var bound = new ViewBounds
                 {
@@ -50,11 +58,11 @@ namespace App20
                  Main.Children.Add(label,
                       Constraint.RelativeToParent((p) =>
                       {
-                          return bound.x;
+                          return label.X;
                       }),
                       Constraint.RelativeToParent((p) =>
                       {
-                          return bound.y;
+                          return label.Y;
                       }),
                       Constraint.RelativeToParent((p) =>
                       {
@@ -71,6 +79,35 @@ namespace App20
             }
 
             Main.Children.Add(new Label { Text = "aaaaaa" }, () => new Rectangle(300, 300, 50, 50));
+            */
+
+            label = new Label
+            {
+                Text = "aaa",
+                WidthRequest = 30,
+                HeightRequest = 30,
+                TranslationX = 100,
+                TranslationY = 100,
+            };
+            
+            Main.Children.Add(label,
+                Constraint.RelativeToParent((p) =>
+                {
+                    return label.X;
+                }),
+                Constraint.RelativeToParent((p) =>
+                {
+                    return label.Y;
+                }),
+                Constraint.RelativeToParent((p) =>
+                {
+                    return label.Width;
+                }),
+                Constraint.RelativeToParent((p) =>
+                {
+                    return label.Height;
+                }));
+            
 		}
 
         int count;
@@ -89,7 +126,7 @@ namespace App20
             ys[count % 5] += 50;
 
             count++;
-            */
+            
 
             var keys = dic.Keys.ToList();
 
@@ -102,7 +139,12 @@ namespace App20
             rc.X += 50;
             rc.Y += 50;
             await view.LayoutTo(rc, 250);
-
+            */
+            
+            var rc = label.Bounds;
+            rc.X += 50;
+            rc.Y += 50;
+            await label.LayoutTo(rc, 250);
         }
 
         int y;

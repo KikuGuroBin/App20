@@ -4,9 +4,12 @@ using System.Text;
 
 namespace App20
 {
-    class DrugEvent
+    public class DrugEvent
     {
         public double X;
         public double Y;
+
+        /* イベントの種類を判定する */
+        public int EventFlag;
     }
 }

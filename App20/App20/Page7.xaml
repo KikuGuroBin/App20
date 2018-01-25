@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App20.Page6">
+             xmlns:local="clr-namespace:App20;assembly:App20"
+             x:Class="App20.Page7">
     <ContentPage.Content>
-        <RelativeLayout x:Name="Main">
-            
-            <Button Clicked="OnClick"/>
-            <Button TranslationX="150"
-                    Clicked="OnClick2"/>
-        </RelativeLayout>
+        <local:MyRelative x:Name="Main">
+        </local:MyRelative>
     </ContentPage.Content>
 </ContentPage>
