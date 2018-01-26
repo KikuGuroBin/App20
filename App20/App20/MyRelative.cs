@@ -14,25 +14,29 @@ namespace App20
 
         public MyRelative()
         {
-            Touch = (s, e) =>
+            Touch = OnTouch;
+        }
+
+        public void OnTouch(object sender, DrugEvent args)
+        {
+            switch (args.EventFlag)
             {
-                switch (e.EventFlag)
-                {
-                    /* タッチした時 */
-                    case 1:
-                        Druging = true;
+                /* タッチした時 */
+                case 1:
+                    Druging = true;
+                    
+                    break;
 
-                        break;
-                    /* ドラッグした時 */
-                    case 2:
-                        break;
-                    /* 指を離した時 */
-                    case 3:
-                        Druging = false;
+                /* ドラッグした時 */
+                case 2:
+                    break;
 
-                        break;
-                }
-            };
+                /* 指を離した時 */
+                case 3:
+                    Druging = false;
+
+                    break;
+            }
         }
     }
 }

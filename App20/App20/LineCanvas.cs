@@ -6,7 +6,7 @@ using Xamarin.Forms;
 namespace App20
 {
     /// <summary>
-    /// 線を描画するためのレイアウト。
+    /// Viewインスタンス同士をつなげる線を描画するためのレイアウト。
     /// 
     /// 線の描画は内部クラスで行っている。
     /// </summary>
@@ -90,7 +90,7 @@ namespace App20
             return line;
         }
 
-        public LineCanvas AppendView(View view)
+        public void AppendView(View view)
         {
             this.Children.Add(view,
                 Constraint.RelativeToParent((p) =>
@@ -110,10 +110,13 @@ namespace App20
                     return view.Height;
                 })
             );
-
-            return this;
         }
 
+        /// <summary>
+        /// 引数で指定したViewインスタンスとつながっているLineCanvas.Lineインスタンスを返す。
+        /// </summary>
+        /// <param name="view"></param>
+        /// <returns></returns>
         public LineCanvas.Line[] SearchLines(View view)
         {
             return Lines.Where(l => view == l.PreviousView || view == l.BehideView)
@@ -121,15 +124,35 @@ namespace App20
                         .ToArray();
         }
 
-        public void DeleteLines(LineCanvas.Line line)
+        /// <summary>
+        /// 指定されたViewインスタンスにつながっているLineCanvas.Lineインスタンスを削除する。
+        /// </summary>
+        /// <param name="view">削除するViewインスタンス。</param>
+        public void DeleteLine(View view)
         {
-            var list = line.Lines;
+            var lines = SearchLines(view);
 
-            Lines.Remove(line);
+            DeleteLine(lines);
+        }
 
-            foreach (var box in list)
+        /// <summary>
+        /// 引数で渡されたLineCanvas.Lineインスタンスと一致するインスタンスを
+        /// フィールドLinesから削除し、
+        /// 線の描画用に使用していたBoxViewインスタンスをレイアウトから消す
+        /// </summary>
+        /// <param name="lines">削除するLineCanvas.Lineインスタンス。</param>
+        public void DeleteLine(params LineCanvas.Line[] lines)
+        {
+            foreach (var line in lines)
             {
-                this.Children.Remove(box);
+                var list = line.Lines;
+                
+                foreach (var box in list)
+                {
+                    this.Children.Remove(box);
+                }
+
+                Lines.Remove(line);
             }
         }
 
@@ -163,7 +186,7 @@ namespace App20
             /// <summary>
             /// 描画用BoxViewを管理するリスト。
             /// </summary>
-            public List<BoxView> Lines = new List<BoxView>();
+            public List<BoxView> Lines;
             
             /// <summary>
             /// <para><seealso cref="DrawTail" />か</para>
@@ -321,7 +344,7 @@ namespace App20
                     /* ================ c,dパターンの描画 ================ */
 
                     /* Bインスタンスの頭のX座標取得 */
-                    var bhx = b.TranslationX;
+                    var bhx = b.X;
 
                     /* 両インスタンスの間のX座標 */
                     var bothx = Math.Min(bcx, acx) + Math.Abs(bcx - acx) / 2;
@@ -349,21 +372,21 @@ namespace App20
                     box2.IsVisible = true;
 
                     Move(box2,
-                        acx - (bcx - acx > 0 ? 0 : box2w),
-                        aty + box1.HeightRequest,
+                        acx - (bcx - acx > 0 ? 0 : box2w) - linePixcel / 2,
+                        aty + box1.Height - linePixcel / 2,
                         box2w,
                         linePixcel
                     );
 
                     /* box3のX座標を計算 */
-                    var box3x = acx + (bcx - acx > 0 ? box2w : -box2w);
+                    var box3x = acx + (bcx - acx > 0 ? box2w : -box2w) - linePixcel / 2;
 
                     var box3 = Lines[2];
                     box3.IsVisible = true;
 
                     Move(box3,
                         box3x,
-                        bhy - viewMargin,
+                        bhy - viewMargin - linePixcel / 2,
                         linePixcel,
                         aty - bhy - viewMargin * 2
                     );
@@ -377,8 +400,8 @@ namespace App20
                     box4.IsVisible = true;
 
                     Move(box4,
-                        (region > viewMargin * 2 && work <= 0) || (region <= viewMargin * 2 && work > 0) ? bcx : box3x,
-                        bhy - viewMargin,
+                        (region > viewMargin * 2 && work <= 0) || (region <= viewMargin * 2 && work > 0) ? bcx - linePixcel / 2 : box3x,
+                        bhy - viewMargin - linePixcel / 2,
                         Math.Abs(bcx - box3x),
                         linePixcel
                     );
@@ -388,7 +411,7 @@ namespace App20
 
                     Move(box5,
                         bcx,
-                        bhy - viewMargin + linePixcel,
+                        bhy - viewMargin - linePixcel / 2,
                         linePixcel,
                         viewMargin
                     );
@@ -442,7 +465,7 @@ namespace App20
                     {
                         Move(box1,
                             aex - (dir ? 0 : viewMargin),
-                            aey,
+                            aey - linePixcel / 2,
                             linePixcel,
                             viewMargin
                         );
@@ -452,8 +475,8 @@ namespace App20
                         box2.IsVisible = true;
                         
                         Move(box2,
-                            aex + (dir ? 1 : -1) * viewMargin,
-                            aey,
+                            aex + (dir ? 1 : -1) * viewMargin - linePixcel / 2,
+                            aey - linePixcel / 2,
                             linePixcel,
                             both
                         );
@@ -463,15 +486,15 @@ namespace App20
                         box3.IsVisible = true;
 
                         Move(box3,
-                            bcx - (work > 0 ? 0 : box3w),
-                            aey + both,
+                            bcx - (work > 0 ? 0 : box3w) - linePixcel / 2,
+                            aey + both - linePixcel / 2,
                             Math.Abs(bcx - aex) + viewMargin,
                             linePixcel
                         );
                         
                         Move(box4,
-                            bcx,
-                            aey + both,
+                            bcx - linePixcel / 2,
+                            aey + both - linePixcel / 2,
                             linePixcel,
                             bhy - (aey + both)
                         );
@@ -480,7 +503,7 @@ namespace App20
                     {
                         Move(box1,
                             aex - (dir ? 0 : work),
-                            aey,
+                            aey - linePixcel / 2,
                             Math.Abs(work),
                             viewMargin
                         );
@@ -490,8 +513,8 @@ namespace App20
                         box3.IsVisible = false;
                         
                         Move(box4,
-                            bcx,
-                            aey,
+                            bcx - linePixcel / 2,
+                            aey - linePixcel / 2,
                             linePixcel,
                             bhy - aey
                         );
@@ -534,20 +557,20 @@ namespace App20
 
                     Move(box1,
                         aex - (dir ? 0 : box1w),
-                        aey,
+                        aey - linePixcel / 2,
                         box1w,
                         linePixcel
                     );
 
                     /* box2のX座標を計算 */
-                    var box2x = aex + (dir ? box1w : -box1w);
+                    var box2x = aex + (dir ? box1w : -box1w) - linePixcel / 2;
 
                     var box2 = Lines[1];
                     box2.IsVisible = true;
 
                     Move(box2,
                         box2x,
-                        bhy - viewMargin,
+                        bhy - viewMargin - linePixcel / 2,
                         linePixcel,
                         aey - bhy + viewMargin
                     );
@@ -561,8 +584,8 @@ namespace App20
                     box3.IsVisible = true;
 
                     Move(box3,
-                        (region > viewMargin * 2) ? bcx : box2x,
-                        bhy - viewMargin,
+                        (region > viewMargin * 2) ? bcx - linePixcel / 2 : box2x,
+                        bhy - viewMargin - linePixcel / 2,
                         Math.Abs(bcx - box2x),
                         linePixcel
                     );
@@ -571,8 +594,8 @@ namespace App20
                     box4.IsVisible = true;
 
                     Move(box3,
-                        bcx,
-                        bhy - viewMargin,
+                        bcx - linePixcel / 2,
+                        bhy - viewMargin - linePixcel / 2,
                         linePixcel,
                         viewMargin
                     );

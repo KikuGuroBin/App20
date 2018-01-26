@@ -34,7 +34,18 @@ namespace App20.Droid
 
         public void OnTouch(object sender, TouchEventArgs args)
         {
-            if (args.Event.Action == MotionEventActions.Move)
+            if (args.Event.Action == MotionEventActions.Down)
+            {
+                // コールバック用インスタンス生成
+                var callBack = new DrugEvent
+                {
+                };
+
+                // コールバック
+                var view = Element as MyBox;
+                view.Drug(view, callBack);
+            }
+            else if (args.Event.Action == MotionEventActions.Move)
             {
                 // 移動した分の座標の差分計算
                 var x = args.Event.RawX - CX;

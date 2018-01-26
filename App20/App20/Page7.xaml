@@ -5,6 +5,15 @@
              x:Class="App20.Page7">
     <ContentPage.Content>
         <local:MyRelative x:Name="Main">
+            <Button Text="Click"
+                    Clicked="OnClick"/>
+            <!--
+            <local:MyBox TranslationX="100"
+                         TranslationY="100"
+                         WidthRequest="50"
+                         HeightRequest="50"
+                         BackgroundColor="Red"/>
+            -->
         </local:MyRelative>
     </ContentPage.Content>
 </ContentPage>

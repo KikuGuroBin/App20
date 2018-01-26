@@ -22,6 +22,8 @@ namespace App20
             rc.X += args.X;
             rc.Y += args.Y;
             //this.LayoutTo(rc);
+
+            System.Diagnostics.Debug.WriteLine("deg : MyBox.Touch");
         }
     }
 }

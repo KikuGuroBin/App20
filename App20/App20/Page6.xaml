@@ -4,7 +4,6 @@
              x:Class="App20.Page6">
     <ContentPage.Content>
         <RelativeLayout x:Name="Main">
-            
             <Button Clicked="OnClick"/>
             <Button TranslationX="150"
                     Clicked="OnClick2"/>
