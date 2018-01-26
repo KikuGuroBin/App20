@@ -55,7 +55,7 @@ namespace App20
         /// <param name="args"></param>
         private void Touch(object sender, DrugEvent args)
         {
-            MoveCanvas(args.X, args.Y);
+           // MoveCanvas(args.X, args.Y);
         }
 
         /* index.OnClick */
@@ -73,15 +73,31 @@ namespace App20
 
             if ((x / 10) % 2 == 0)
             {
-                CanvasAppend(label, x, 0, 50, 50);
+            //    CanvasAppend(label, x, 0, 50, 50);
             }
             else
             {
-                CanvasAppend(label, 0, x, 50, 50);
+             //   CanvasAppend(label, 0, x, 50, 50);
             }
+
+            var box = new MyBox
+            {
+                BackgroundColor = Color.Black,
+            };
+
+            CanvasAppend(box, 40, 40, 50, 50);
 
             x += 50;
             y += 50;
+        }
+
+        int ss;
+
+        private void OnClick2(object sender, EventArgs args)
+        {
+            Main.Children.Add(new Label { Text = "12345"}, () => new Rectangle(200, ss, 50, 50));
+
+            ss += 50;
         }
         
         /* index.InitializeCanvas */

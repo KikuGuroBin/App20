@@ -7,6 +7,9 @@
         <local:MyRelative x:Name="Main">
             <Button Text="Click"
                     Clicked="OnClick"/>
+            <Button Text="Click!!"
+                    Clicked="OnClick2"
+                    TranslationX="150"/>
             <!--
             <local:MyBox TranslationX="100"
                          TranslationY="100"
