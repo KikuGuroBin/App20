@@ -15,7 +15,7 @@ namespace App20
 
             // MainPage = new NavigationPage(new MainPage());
 
-            MainPage = new NavigationPage(new Page7());
+            MainPage = new NavigationPage(new Page8());
 		}
 
 		protected override void OnStart ()

@@ -12,11 +12,17 @@ namespace App20
 
         public EventHandler<DrugEvent> Touch;
 
+        public Dictionary<View, ViewBounds> Views;
+
         public MyRelative()
         {
             Touch = OnTouch;
-        }
 
+            ChildRemoved += Remove;
+
+            Views = new Dictionary<View, ViewBounds>();
+        }
+        
         public void OnTouch(object sender, DrugEvent args)
         {
             switch (args.EventFlag)
@@ -37,6 +43,45 @@ namespace App20
 
                     break;
             }
+        }
+
+        private void Remove(object sender, EventArgs args)
+        {
+            var view = sender as View;
+
+            Views.Remove(view);
+        }
+
+        private void ChildrenAdd(View view, double x = 0, double y = 0, double widthh = 0, double height = 0)
+        {
+            var bounds = new ViewBounds
+            {
+                X = x,
+                Y = y,
+                Width = 50,
+                Height = 50,
+            };
+
+            Views.Add(view, bounds);
+
+            this.Children.Add(view,
+                Constraint.RelativeToParent((p) =>
+                {
+                    return bounds.X;
+                }),
+                Constraint.RelativeToParent((p) =>
+                {
+                    return bounds.Y;
+                }),
+                Constraint.RelativeToParent((p) =>
+                {
+                    return bounds.Width;
+                }),
+                Constraint.RelativeToParent((p) =>
+                {
+                    return bounds.Height;
+                })
+            );
         }
     }
 }

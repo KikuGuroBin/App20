@@ -9,6 +9,9 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
+using App20;
+using App20.iOS;
+
 [assembly:ExportRenderer(typeof(MyBox), typeof(MyBoxRenderer))]
 namespace App20.iOS
 {
